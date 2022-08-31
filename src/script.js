@@ -121,12 +121,27 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
+ document.addEventListener('mousemove', onDocumentMouseMove)
 
 const updateSphere = (event ) => {
     sphere.position.y = window.scrollY * .001
 }
 
 window.addEventListener('scroll', updateSphere);
+
+let mouseX = 0
+let mouseY = 0
+
+let targetX = 0
+let targetY = 0
+
+const windowX = window.innerWidth /2;
+const windowY = window.innerHeight /2;
+
+function onDocumentMouseMove(event) {
+    mouseX = (event.clientX - windowX)
+    mouseY = (event.clientY - windowY)
+}
 
 const clock = new THREE.Clock()
 
@@ -135,6 +150,9 @@ const generatedSpheres = []
 let lastTime = 0
 const tick = () =>
 {
+    targetX = mouseX * .001
+    targetY = mouseY * .001
+
     const elapsedTime = clock.getElapsedTime()
     const timeDifferenceSeconds = elapsedTime-lastTime
     if (timeDifferenceSeconds > .2) {
@@ -157,7 +175,7 @@ const tick = () =>
             generatedSpheres.splice(index, 1);
             return
         }
-        sphere.position.z += .4
+        sphere.position.z += .3
     
         switch (sphere.direction) {
             case SCREEN_DIRECTIONS.NW:
@@ -200,6 +218,10 @@ const tick = () =>
         }
 
     })
+
+    camera.position.y += .2 * (targetX - camera.position.y)
+    camera.position.x += .2 * (targetY - camera.position.x)
+    // camera.position.x += .5 * (targetY - camera.rotation.x)
 
     // Update objects
     // sphere.rotation.y = .5 * elapsedTime
