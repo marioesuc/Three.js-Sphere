@@ -219,8 +219,8 @@ const tick = () =>
 
     })
 
-    camera.position.y += .2 * (targetX - camera.position.y)
-    camera.position.x += .2 * (targetY - camera.position.x)
+    camera.position.y += .2 * (targetY - camera.position.y)
+    camera.position.x += .2 * (targetX - camera.position.x)
     // camera.position.x += .5 * (targetY - camera.rotation.x)
 
     // Update objects
